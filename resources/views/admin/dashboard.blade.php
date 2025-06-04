@@ -47,9 +47,26 @@
                                     @foreach($latestBooks as $book)
                                         <tr>
                                             <td>
-                                                <img src="/images/books/{{ $book->cover ?? 'default.jpg' }}" alt="{{ $book->title }}" width="40">
+                                                <div style="width: 48px; height: 64px; background: #f0f0f0; border-radius: 0.25rem; overflow: hidden;">
+                                                    @if($book->cover_image && file_exists(public_path('images/books/' . $book->cover_image)))
+                                                        <img src="{{ asset('images/books/' . $book->cover_image) }}" 
+                                                             alt="{{ $book->title }}" 
+                                                             style="width: 100%; height: 100%; object-fit: cover;">
+                                                    @else
+                                                        <div style="width: 100%; height: 100%; background: #e5e7eb; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 0.75rem; text-align: center; padding: 2px;">
+                                                            Нет обложки
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </td>
-                                            <td>{{ $book->title }}</td>
+                                            <td>
+                                                <div>
+                                                    <div style="font-weight: 500;">{{ $book->title }}</div>
+                                                    @if($book->description)
+                                                        <div style="color: #666; font-size: 0.9rem;">{{ Str::limit($book->description, 50) }}</div>
+                                                    @endif
+                                                </div>
+                                            </td>
                                             <td>{{ $book->author->name }}</td>
                                             <td>
                                                 <a href="{{ route('admin.books.edit', $book->id) }}" class="btn btn-primary btn-sm">Редактировать</a>
@@ -87,7 +104,17 @@
                                     @foreach($latestUsers as $user)
                                         <tr>
                                             <td>
-                                                <img src="/images/avatars/{{ $user->avatar ?? 'default.jpg' }}" alt="{{ $user->name }}" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                                                @if($user->avatar && file_exists(public_path('images/avatars/' . $user->avatar)))
+                                                    <img src="{{ asset('images/avatars/' . $user->avatar) }}" 
+                                                         alt="{{ $user->name }}" 
+                                                         width="40" 
+                                                         height="40" 
+                                                         style="border-radius: 50%; object-fit: cover;">
+                                                @else
+                                                    <div style="width: 40px; height: 40px; background: #e5e7eb; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 12px; border-radius: 50%;">
+                                                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                                                    </div>
+                                                @endif
                                             </td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>

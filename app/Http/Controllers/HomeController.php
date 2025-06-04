@@ -42,4 +42,28 @@ class HomeController extends Controller
             
         return view('recommendations', compact('recommendedBooks'));
     }
+    
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (empty($query) || strlen($query) < 2) {
+            return redirect()->route('home')
+                ->with('error', 'Поисковый запрос должен содержать не менее 2 символов.');
+        }
+        
+        $books = Book::with('author', 'genres')
+            ->where('title', 'like', "%{$query}%")
+            ->orWhereHas('author', function($q) use ($query) {
+                $q->where('name', 'like', "%{$query}%");
+            })
+            ->paginate(12);
+            
+        $authors = Author::where('name', 'like', "%{$query}%")
+            ->withCount('books')
+            ->take(5)
+            ->get();
+            
+        return view('search-results', compact('books', 'authors', 'query'));
+    }
 }

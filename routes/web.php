@@ -32,6 +32,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/recommendations', [HomeController::class, 'recommendations'])->name('recommendations');
 Route::get('/book/{id}', [BookController::class, 'show'])->name('book.show');
 Route::get('/author/{id}', [AuthorController::class, 'show'])->name('author.show');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 
 // Authentication routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

@@ -80,6 +80,12 @@
         padding: 1.5rem 0;
     }
 
+    .search-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
     .search-container {
         position: relative;
         width: 100%;
@@ -131,12 +137,6 @@
 
     .search-nav a:hover {
         color: #B57219;
-    }
-
-    .search-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
     }
 
     /* Sections */
@@ -287,7 +287,7 @@
 <section class="container">
     <div class="hero-banner">
         <div class="hero-image-container">
-            <img src="/images/hero-cat.png" alt="Cat with books">
+            <img src="{{ asset('images/hero-cat.png') }}" alt="Cat with books">
         </div>
         <div class="hero-content">
             <h1 class="hero-title">НАЧНИ ЧИТАТЬ<br>ВМЕСТЕ С<br>SILLYBOOKS</h1>
@@ -300,8 +300,15 @@
 <section class="container search-section">
     <div class="search-wrapper">
         <div class="search-container">
-            <input type="text" placeholder="Найти книгу" class="search-input">
-            <div class="search-icon">🔍</div>
+            <form action="{{ route('search') }}" method="GET">
+                <input type="text" name="query" placeholder="Найти книгу или автора" class="search-input">
+                <button type="submit" class="search-icon" style="background: none; border: none; cursor: pointer;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+            </form>
         </div>
         <div class="search-nav">
             <a href="{{ route('home') }}" class="active">Главная</a>
@@ -318,8 +325,8 @@
         @foreach($newBooks as $book)
             <a href="{{ route('book.show', $book->id) }}" class="book-card">
                 <div class="book-cover">
-                    @if($book->cover_image)
-                        <img src="/images/books/{{ $book->cover_image }}" alt="{{ $book->title }} by {{ $book->author->name }}">
+                    @if($book->cover_image && file_exists(public_path('images/books/' . $book->cover_image)))
+                        <img src="{{ asset('images/books/' . $book->cover_image) }}" alt="{{ $book->title }} by {{ $book->author->name }}">
                     @else
                         <div style="width: 100%; height: 100%; background: #e5e7eb; display: flex; align-items: center; justify-content: center; color: #9ca3af;">Нет обложки</div>
                     @endif
@@ -337,8 +344,8 @@
     <div class="authors-grid">
         @foreach($popularAuthors as $author)
             <a href="{{ route('author.show', $author->id) }}" class="author-card">
-                @if($author->image)
-                    <img src="/images/authors/{{ $author->image }}" alt="{{ $author->name }}">
+                @if($author->image && file_exists(public_path('images/authors/' . $author->image)))
+                    <img src="{{ asset('images/authors/' . $author->image) }}" alt="{{ $author->name }}">
                 @else
                     <div style="width: 100%; height: 100%; background: #B57219; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: bold;">{{ substr($author->name, 0, 1) }}</div>
                 @endif
@@ -357,8 +364,8 @@
         @foreach($popularBooks as $book)
             <a href="{{ route('book.show', $book->id) }}" class="book-card">
                 <div class="book-cover">
-                    @if($book->cover_image)
-                        <img src="/images/books/{{ $book->cover_image }}" alt="{{ $book->title }} by {{ $book->author->name }}">
+                    @if($book->cover_image && file_exists(public_path('images/books/' . $book->cover_image)))
+                        <img src="{{ asset('images/books/' . $book->cover_image) }}" alt="{{ $book->title }} by {{ $book->author->name }}">
                     @else
                         <div style="width: 100%; height: 100%; background: #e5e7eb; display: flex; align-items: center; justify-content: center; color: #9ca3af;">Нет обложки</div>
                     @endif
@@ -377,8 +384,8 @@
         @foreach($bestsellerBooks as $book)
             <a href="{{ route('book.show', $book->id) }}" class="book-card">
                 <div class="book-cover">
-                    @if($book->cover_image)
-                        <img src="/images/books/{{ $book->cover_image }}" alt="{{ $book->title }} by {{ $book->author->name }}">
+                    @if($book->cover_image && file_exists(public_path('images/books/' . $book->cover_image)))
+                        <img src="{{ asset('images/books/' . $book->cover_image) }}" alt="{{ $book->title }} by {{ $book->author->name }}">
                     @else
                         <div style="width: 100%; height: 100%; background: #e5e7eb; display: flex; align-items: center; justify-content: center; color: #9ca3af;">Нет обложки</div>
                     @endif

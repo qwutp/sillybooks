@@ -121,14 +121,6 @@
                 </button>
             </div>
             
-            <div style="text-align: center;">
-                @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" style="color: #B57219; text-decoration: none; font-size: 0.9rem;">
-                        Забыли пароль?
-                    </a>
-                @endif
-            </div>
-            
             <div style="text-align: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
                 <p style="color: #666; margin: 0;">Нет аккаунта? <a href="{{ route('register') }}" style="color: #B57219; text-decoration: none;">Зарегистрироваться</a></p>
             </div>
