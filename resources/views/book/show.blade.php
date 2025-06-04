@@ -8,8 +8,8 @@
             <!-- Book Cover -->
             <div style="flex-shrink: 0;">
                 <div style="width: 300px; height: 400px; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                    @if($book->cover_image)
-                        <img src="/images/books/{{ $book->cover_image }}" alt="{{ $book->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    @if($book->cover_image && file_exists(public_path('images/books/' . $book->cover_image)))
+                        <img src="{{ asset('images/books/' . $book->cover_image) }}" alt="{{ $book->title }}" style="width: 100%; height: 100%; object-fit: cover;">
                     @else
                         <div style="width: 100%; height: 100%; background: #e5e7eb; display: flex; align-items: center; justify-content: center; color: #9ca3af;">Нет обложки</div>
                     @endif
@@ -142,8 +142,8 @@
             <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 1.5rem;">
                 <div style="display: flex; align-items: center; margin-bottom: 1rem;">
                     <div style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden; margin-right: 1rem;">
-                        @if($review->user->avatar)
-                            <img src="/images/avatars/{{ $review->user->avatar }}" alt="{{ $review->user->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        @if($review->user->avatar && file_exists(public_path('images/avatars/' . $review->user->avatar)))
+                            <img src="{{ asset('images/avatars/' . $review->user->avatar) }}" alt="{{ $review->user->name }}" style="width: 100%; height: 100%; object-fit: cover;">
                         @else
                             <div style="width: 100%; height: 100%; background: #B57219; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">{{ substr($review->user->name, 0, 1) }}</div>
                         @endif

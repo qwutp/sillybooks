@@ -45,10 +45,10 @@
                     <td>
                         <div style="display: flex; align-items: center;">
                             <div style="width: 48px; height: 64px; margin-right: 1rem; background: #f0f0f0; border-radius: 0.25rem; overflow: hidden;">
-                                @if($book->cover_image)
-                                    <img src="/images/books/{{ $book->cover_image }}" alt="{{ $book->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                @if($book->cover_image && file_exists(public_path('images/books/' . $book->cover_image)))
+                                    <img src="{{ asset('images/books/' . $book->cover_image) }}" alt="{{ $book->title }}" style="width: 100%; height: 100%; object-fit: cover;">
                                 @else
-                                    <div style="width: 100%; height: 100%; background: #e5e7eb; display: flex; align-items: center; justify-content: center; color: #9ca3af;">Нет обложки</div>
+                                    <div style="width: 100%; height: 100%; background: #e5e7eb; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 0.75rem;">Нет обложки</div>
                                 @endif
                             </div>
                             <div>

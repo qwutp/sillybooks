@@ -30,7 +30,19 @@ class BookController extends Controller
             abort(403, 'Доступ запрещен. Требуются права администратора.');
         }
         
-        $books = Book::with('author')->latest()->paginate(10);
+        $query = Book::with(['author', 'genres']);
+
+        if (request('search')) {
+            $search = request('search');
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhereHas('author', function($authorQuery) use ($search) {
+                      $authorQuery->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $books = $query->latest()->paginate(10);
         
         return view('admin.books.index', compact('books'));
     }

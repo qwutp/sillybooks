@@ -41,8 +41,16 @@ class AuthorController extends Controller
         $author->bio = $validated['bio'] ?? null;
         
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('authors', 'public');
-            $author->image = basename($imagePath);
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            
+            // Создаем папку если её нет
+            if (!file_exists(public_path('images/authors'))) {
+                mkdir(public_path('images/authors'), 0755, true);
+            }
+            
+            $image->move(public_path('images/authors'), $imageName);
+            $author->image = $imageName;
         }
         
         $author->save();
@@ -69,12 +77,20 @@ class AuthorController extends Controller
         
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($author->image) {
-                Storage::disk('public')->delete('authors/' . $author->image);
+            if ($author->image && file_exists(public_path('images/authors/' . $author->image))) {
+                unlink(public_path('images/authors/' . $author->image));
             }
             
-            $imagePath = $request->file('image')->store('authors', 'public');
-            $author->image = basename($imagePath);
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            
+            // Создаем папку если её нет
+            if (!file_exists(public_path('images/authors'))) {
+                mkdir(public_path('images/authors'), 0755, true);
+            }
+            
+            $image->move(public_path('images/authors'), $imageName);
+            $author->image = $imageName;
         }
         
         $author->save();
@@ -86,8 +102,8 @@ class AuthorController extends Controller
     public function destroy(Author $author)
     {
         // Delete image if exists
-        if ($author->image) {
-            Storage::disk('public')->delete('authors/' . $author->image);
+        if ($author->image && file_exists(public_path('images/authors/' . $author->image))) {
+            unlink(public_path('images/authors/' . $author->image));
         }
         
         $author->delete();

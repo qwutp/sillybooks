@@ -44,8 +44,8 @@
                     <td>
                         <div style="display: flex; align-items: center;">
                             <div style="width: 48px; height: 48px; margin-right: 1rem; background: #f0f0f0; border-radius: 50%; overflow: hidden;">
-                                @if($author->image)
-                                    <img src="/images/authors/{{ $author->image }}" alt="{{ $author->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                @if($author->image && file_exists(public_path('images/authors/' . $author->image)))
+                                    <img src="{{ asset('images/authors/' . $author->image) }}" alt="{{ $author->name }}" style="width: 100%; height: 100%; object-fit: cover;">
                                 @else
                                     <div style="width: 100%; height: 100%; background: #B57219; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">{{ substr($author->name, 0, 1) }}</div>
                                 @endif

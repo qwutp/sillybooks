@@ -162,11 +162,11 @@
             </div>
 
             <!-- Текущая обложка -->
-            @if($book->cover_image)
+            @if($book->cover_image && file_exists(public_path('images/books/' . $book->cover_image)))
                 <div style="margin-bottom: 1.5rem;">
                     <label class="form-label">Текущая обложка</label>
                     <div class="current-image">
-                        <img src="/images/books/{{ $book->cover_image }}" alt="{{ $book->title }}">
+                        <img src="{{ asset('images/books/' . $book->cover_image) }}" alt="{{ $book->title }}">
                     </div>
                 </div>
             @endif

@@ -49,11 +49,11 @@
             </div>
 
             <!-- Текущее фото -->
-            @if($author->image)
+            @if($author->image && file_exists(public_path('images/authors/' . $author->image)))
                 <div class="form-group">
                     <label class="form-label">Текущее фото</label>
                     <div>
-                        <img src="/images/authors/{{ $author->image }}" alt="{{ $author->name }}" 
+                        <img src="{{ asset('images/authors/' . $author->image) }}" alt="{{ $author->name }}" 
                              style="width: 128px; height: 128px; object-fit: cover; border-radius: 50%;">
                     </div>
                 </div>

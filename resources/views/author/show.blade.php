@@ -8,8 +8,8 @@
             <!-- Author Image -->
             <div style="flex-shrink: 0;">
                 <div style="width: 200px; height: 200px; border-radius: 50%; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                    @if($author->image)
-                        <img src="/images/authors/{{ $author->image }}" alt="{{ $author->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    @if($author->image && file_exists(public_path('images/authors/' . $author->image)))
+                        <img src="{{ asset('images/authors/' . $author->image) }}" alt="{{ $author->name }}" style="width: 100%; height: 100%; object-fit: cover;">
                     @else
                         <div style="width: 100%; height: 100%; background: #B57219; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: bold;">{{ substr($author->name, 0, 1) }}</div>
                     @endif
@@ -52,8 +52,8 @@
                         <div style="text-align: center;">
                             <a href="{{ route('book.show', $book->id) }}" style="text-decoration: none; color: inherit;">
                                 <div style="width: 100%; aspect-ratio: 2/3; border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                                    @if($book->cover_image)
-                                        <img src="/images/books/{{ $book->cover_image }}" alt="{{ $book->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    @if($book->cover_image && file_exists(public_path('images/books/' . $book->cover_image)))
+                                        <img src="{{ asset('images/books/' . $book->cover_image) }}" alt="{{ $book->title }}" style="width: 100%; height: 100%; object-fit: cover;">
                                     @else
                                         <div style="width: 100%; height: 100%; background: #e5e7eb; display: flex; align-items: center; justify-content: center; color: #9ca3af;">Нет обложки</div>
                                     @endif
