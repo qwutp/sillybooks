@@ -35,6 +35,38 @@ class ReviewController extends Controller
         return back()->with('success', 'Отзыв успешно добавлен!');
     }
 
+    public function update(Request $request, Review $review)
+    {
+        // Check if user owns this review
+        if ($review->user_id !== auth()->id()) {
+            return back()->with('error', 'Вы можете редактировать только свои отзывы.');
+        }
+
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'content' => 'required|string|max:1000',
+        ]);
+
+        $review->update([
+            'rating' => $request->rating,
+            'content' => $request->content,
+        ]);
+
+        return back()->with('success', 'Отзыв успешно обновлен!');
+    }
+
+    public function destroy(Review $review)
+    {
+        // Check if user owns this review or is admin
+        if ($review->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
+            return back()->with('error', 'У вас нет прав для удаления этого отзыва.');
+        }
+
+        $review->delete();
+
+        return back()->with('success', 'Отзыв успешно удален!');
+    }
+
     public function like(Review $review)
     {
         // Toggle like functionality would go here

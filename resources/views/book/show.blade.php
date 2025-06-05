@@ -139,7 +139,7 @@
             @endauth
             
             @foreach($book->reviews as $review)
-            <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 1.5rem;">
+            <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 1.5rem;" id="review-{{ $review->id }}">
                 <div style="display: flex; align-items: center; margin-bottom: 1rem;">
                     <div style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden; margin-right: 1rem;">
                         @if($review->user->avatar && file_exists(public_path('images/avatars/' . $review->user->avatar)))
@@ -152,6 +152,9 @@
                         <div style="display: flex; align-items: center; gap: 1rem;">
                             <h3 style="margin: 0; font-weight: 600;">{{ $review->user->name }}</h3>
                             <span style="color: #6b7280; font-size: 0.875rem;">{{ $review->created_at->diffForHumans() }}</span>
+                            @if($review->created_at != $review->updated_at)
+                                <span style="color: #6b7280; font-size: 0.75rem; font-style: italic;">(изменено)</span>
+                            @endif
                         </div>
                         <div style="display: flex; margin-top: 0.25rem;">
                             @for($i = 1; $i <= 5; $i++)
@@ -159,17 +162,73 @@
                             @endfor
                         </div>
                     </div>
+                    
+                    @auth
+                    @if($review->user_id === auth()->id() || auth()->user()->isAdmin())
+                    <div style="display: flex; gap: 0.5rem;">
+                        @if($review->user_id === auth()->id())
+                        <button onclick="editReview({{ $review->id }})" style="background: none; border: none; color: #6b7280; cursor: pointer; padding: 0.25rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                            </svg>
+                        </button>
+                        @endif
+                        
+                        <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Вы уверены, что хотите удалить этот отзыв?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" style="background: none; border: none; color: #ef4444; cursor: pointer; padding: 0.25rem;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3,6 5,6 21,6"/>
+                                    <path d="M19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"/>
+                                    <line x1="10" y1="11" x2="10" y2="17"/>
+                                    <line x1="14" y1="11" x2="14" y2="17"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                    @endif
+                    @endauth
                 </div>
                 
-                <p style="color: #374151; line-height: 1.6; margin-bottom: 1rem;">
-                    {{ $review->content }}
-                </p>
+                <div class="review-content-{{ $review->id }}">
+                    <p style="color: #374151; line-height: 1.6; margin-bottom: 1rem;">
+                        {{ $review->content }}
+                    </p>
+                </div>
                 
-                <div style="display: flex; gap: 1rem;">
-                    <button class="like-button" data-review-id="{{ $review->id }}" style="background: none; border: none; color: #6b7280; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                <!-- Edit form (hidden by default) -->
+                <div class="edit-form-{{ $review->id }}" style="display: none;">
+                    <form action="{{ route('reviews.update', $review->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Оценка:</label>
+                            <div style="display: flex; gap: 0.25rem;">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <button type="button" class="edit-star-rating" data-review-id="{{ $review->id }}" data-rating="{{ $i }}" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; color: {{ $i <= $review->rating ? '#FFD700' : '#d1d5db' }};">★</button>
+                                @endfor
+                            </div>
+                            <input type="hidden" name="rating" id="edit-rating-input-{{ $review->id }}" value="{{ $review->rating }}" required>
+                        </div>
+                        
+                        <div style="margin-bottom: 1rem;">
+                            <textarea name="content" style="width: 100%; min-height: 100px; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; resize: vertical;" required>{{ $review->content }}</textarea>
+                        </div>
+                        
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Сохранить</button>
+                            <button type="button" onclick="cancelEdit({{ $review->id }})" class="btn" style="padding: 0.5rem 1rem; font-size: 0.875rem; background: #6b7280; color: white; border: none; border-radius: 0.5rem; cursor: pointer; font-family: Druk Wide Cyr">Отмена</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="review-actions-{{ $review->id }}" style="display: flex; gap: 1rem;">
+                    <button class="like-button" data-review-id="{{ $review->id }}" style="background: none; border: none; color: #6b7280; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M7 10v12l4-4 4 4V10"/>
-                            <path d="M5 6h14a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/>
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                         </svg>
                         <span>Нравится</span>
                     </button>
@@ -199,7 +258,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Page loaded, initializing book status buttons');
             
-            // Star rating functionality
+            // Star rating functionality for new reviews
             document.querySelectorAll('.star-rating').forEach(star => {
                 star.addEventListener('click', function() {
                     const rating = this.dataset.rating;
@@ -212,6 +271,34 @@
                             s.style.color = '#d1d5db';
                         }
                     });
+                });
+            });
+            
+            // Star rating functionality for edit forms
+            document.querySelectorAll('.edit-star-rating').forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.dataset.rating;
+                    const reviewId = this.dataset.reviewId;
+                    document.getElementById(`edit-rating-input-${reviewId}`).value = rating;
+                    
+                    document.querySelectorAll(`.edit-star-rating[data-review-id="${reviewId}"]`).forEach((s, index) => {
+                        if (index < rating) {
+                            s.style.color = '#FFD700';
+                        } else {
+                            s.style.color = '#d1d5db';
+                        }
+                    });
+                });
+            });
+            
+            // Like button hover effect
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.color = '#ef4444';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.color = '#6b7280';
                 });
             });
             
@@ -355,5 +442,18 @@
                 }, 5000);
             }
         });
+        
+        // Edit review functions
+        function editReview(reviewId) {
+            document.querySelector(`.review-content-${reviewId}`).style.display = 'none';
+            document.querySelector(`.edit-form-${reviewId}`).style.display = 'block';
+            document.querySelector(`.review-actions-${reviewId}`).style.display = 'none';
+        }
+        
+        function cancelEdit(reviewId) {
+            document.querySelector(`.review-content-${reviewId}`).style.display = 'block';
+            document.querySelector(`.edit-form-${reviewId}`).style.display = 'none';
+            document.querySelector(`.review-actions-${reviewId}`).style.display = 'flex';
+        }
     </script>
 @endsection

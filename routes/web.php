@@ -60,6 +60,8 @@ Route::middleware(['auth'])->group(function () {
     
     // Reviews routes
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
     Route::post('/reviews/{review}/like', [ReviewController::class, 'like'])->name('reviews.like');
     
     // User books routes

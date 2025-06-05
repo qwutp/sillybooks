@@ -56,6 +56,7 @@ class User extends Authenticatable
      */
     public function hasRole($role)
     {
+        // Проверяем, что роль пользователя не null
         if (!$this->role) {
             return false;
         }
@@ -68,10 +69,19 @@ class User extends Authenticatable
     }
     
     /**
+     * Check if the user is an admin.
+     */
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+    
+    /**
      * Check if the user has a specific permission.
      */
     public function hasPermission($permission)
     {
+        // Проверяем, что роль пользователя не null
         if (!$this->role) {
             return false;
         }
