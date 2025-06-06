@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-    /* Hero Section */
+
     .hero-banner {
         background-color: #000;
         border-radius: 16px;
@@ -75,7 +75,6 @@
         background-color: #9A5F14;
     }
 
-    /* Search Section */
     .search-section {
         padding: 1.5rem 0;
     }
@@ -139,7 +138,6 @@
         color: #B57219;
     }
 
-    /* Sections */
     .section {
         padding: 2rem 0;
     }
@@ -152,7 +150,6 @@
         color: #333;
     }
 
-    /* Books Grid */
     .books-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -195,7 +192,6 @@
         font-size: 0.8rem;
     }
 
-    /* Authors Grid */
     .authors-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -282,8 +278,6 @@
         }
     }
 </style>
-
-<!-- Hero Section -->
 <section class="container">
     <div class="hero-banner">
         <div class="hero-image-container">
@@ -295,8 +289,6 @@
         </div>
     </div>
 </section>
-
-<!-- Search Section -->
 <section class="container search-section">
     <div class="search-wrapper">
         <div class="search-container">
@@ -317,8 +309,6 @@
         </div>
     </div>
 </section>
-
-<!-- New Releases Section -->
 <section class="container section">
     <h2 class="section-title">Новинки</h2>
     <div class="books-grid">
@@ -337,8 +327,6 @@
         @endforeach
     </div>
 </section>
-
-<!-- Popular Authors Section -->
 <section class="container section">
     <h2 class="section-title">Популярные авторы</h2>
     <div class="authors-grid">
@@ -356,8 +344,6 @@
         @endforeach
     </div>
 </section>
-
-<!-- Popular This Week Section -->
 <section class="container section">
     <h2 class="section-title">Популярно на этой неделе</h2>
     <div class="books-grid">
@@ -376,8 +362,6 @@
         @endforeach
     </div>
 </section>
-
-<!-- Bestsellers Section -->
 <section class="container section">
     <h2 class="section-title">Бестселлеры</h2>
     <div class="books-grid">

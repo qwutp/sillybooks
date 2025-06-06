@@ -55,7 +55,6 @@
             @method('PUT')
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-                <!-- Название книги -->
                 <div>
                     <label for="title" class="form-label">Название книги *</label>
                     <input type="text" name="title" id="title" value="{{ old('title', $book->title) }}" required class="form-control @error('title') error @enderror">
@@ -63,8 +62,6 @@
                         <div class="error-message">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <!-- Автор -->
                 <div>
                     <label for="author_id" class="form-label">Автор *</label>
                     <select name="author_id" id="author_id" required class="form-control @error('author_id') error @enderror">
@@ -80,8 +77,6 @@
                     @enderror
                 </div>
             </div>
-
-            <!-- Описание -->
             <div style="margin-bottom: 1.5rem;">
                 <label for="description" class="form-label">Описание *</label>
                 <textarea name="description" id="description" rows="4" required class="form-control @error('description') error @enderror">{{ old('description', $book->description) }}</textarea>
@@ -91,7 +86,6 @@
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-                <!-- Издательство -->
                 <div>
                     <label for="publisher" class="form-label">Издательство *</label>
                     <input type="text" name="publisher" id="publisher" value="{{ old('publisher', $book->publisher) }}" required class="form-control @error('publisher') error @enderror">
@@ -99,8 +93,6 @@
                         <div class="error-message">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <!-- Год публикации -->
                 <div>
                     <label for="year" class="form-label">Год публикации *</label>
                     <input type="number" name="year" id="year" value="{{ old('year', $book->year) }}" min="1000" max="{{ date('Y') }}" required class="form-control @error('year') error @enderror">
@@ -108,8 +100,6 @@
                         <div class="error-message">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <!-- Количество страниц -->
                 <div>
                     <label for="pages" class="form-label">Количество страниц *</label>
                     <input type="number" name="pages" id="pages" value="{{ old('pages', $book->pages) }}" min="1" required class="form-control @error('pages') error @enderror">
@@ -120,7 +110,6 @@
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-                <!-- Язык -->
                 <div>
                     <label for="language" class="form-label">Язык *</label>
                     <input type="text" name="language" id="language" value="{{ old('language', $book->language) }}" required class="form-control @error('language') error @enderror">
@@ -128,8 +117,6 @@
                         <div class="error-message">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <!-- Бестселлер -->
                 <div>
                     <label style="display: flex; align-items: center; margin-top: 2rem;">
                         <input type="checkbox" name="is_bestseller" value="1" {{ old('is_bestseller', $book->is_bestseller) ? 'checked' : '' }} style="margin-right: 0.5rem;">
@@ -137,8 +124,6 @@
                     </label>
                 </div>
             </div>
-
-            <!-- Жанры -->
             <div style="margin-bottom: 1.5rem;">
                 <label class="form-label">Жанры * (выберите один или несколько)</label>
                 @if($genres->count() > 0)
@@ -160,8 +145,6 @@
                     <div class="error-message">{{ $message }}</div>
                 @enderror
             </div>
-
-            <!-- Текущая обложка -->
             @if($book->cover_image && file_exists(public_path('images/books/' . $book->cover_image)))
                 <div style="margin-bottom: 1.5rem;">
                     <label class="form-label">Текущая обложка</label>
@@ -170,8 +153,6 @@
                     </div>
                 </div>
             @endif
-
-            <!-- Новая обложка -->
             <div style="margin-bottom: 1.5rem;">
                 <label for="cover_image" class="form-label">Изменить обложку</label>
                 <input type="file" name="cover_image" id="cover_image" accept="image/*" class="form-control @error('cover_image') error @enderror">
@@ -179,8 +160,6 @@
                     <div class="error-message">{{ $message }}</div>
                 @enderror
             </div>
-
-            <!-- Кнопки -->
             <div style="display: flex; justify-content: flex-end; gap: 1rem; padding-top: 1.5rem; border-top: 1px solid #ddd;">
                 <a href="{{ route('admin.books.index') }}" class="btn btn-secondary btn-sm">Отмена</a>
                 <button type="submit" class="btn btn-primary btn-sm">Сохранить изменения</button>
@@ -190,7 +169,6 @@
 </div>
 
 <script>
-// Проверяем, что выбран хотя бы один жанр
 document.querySelector('form').addEventListener('submit', function(e) {
     const genreCheckboxes = document.querySelectorAll('input[name="genres[]"]:checked');
     if (genreCheckboxes.length === 0) {

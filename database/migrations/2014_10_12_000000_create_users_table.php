@@ -15,7 +15,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar')->default('default-avatar.png');
-            $table->unsignedBigInteger('role_id')->nullable(); // Сделаем role_id nullable
+            $table->unsignedBigInteger('role_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

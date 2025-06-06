@@ -1,4 +1,3 @@
-/* Основные стили SillyBooks */
 @font-face {
   font-family: "Druk Wide Cyr";
   src: url("/fonts/DrukWideCyr-Bold.woff2") format("woff2"), url("/fonts/DrukWideCyr-Bold.woff") format("woff");
@@ -20,7 +19,6 @@ body {
   background-color: #fff;
 }
 
-/* Цвета */
 :root {
   --primary-color: #b57219;
   --primary-hover: #9a5f14;
@@ -34,7 +32,6 @@ body {
   --warning-color: #ffc107;
 }
 
-/* Типография */
 h1,
 h2,
 h3,
@@ -56,7 +53,6 @@ h3 {
   font-size: 1.5rem;
 }
 
-/* Контейнеры */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -93,7 +89,6 @@ h3 {
   flex: 0 0 100%;
 }
 
-/* Кнопки */
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
@@ -147,7 +142,6 @@ h3 {
   color: white;
 }
 
-/* Формы */
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -197,7 +191,6 @@ select.form-control {
   padding-right: 2.5rem;
 }
 
-/* Карточки */
 .card {
   background: white;
   border-radius: 0.75rem;
@@ -222,7 +215,6 @@ select.form-control {
   background-color: var(--bg-light);
 }
 
-/* Таблицы */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -246,7 +238,6 @@ select.form-control {
   background-color: #f8f9fa;
 }
 
-/* Навигация */
 .navbar {
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -295,7 +286,6 @@ select.form-control {
   background-color: var(--primary-color);
 }
 
-/* Сетка книг */
 .books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -338,7 +328,6 @@ select.form-control {
   font-size: 0.8rem;
 }
 
-/* Авторы */
 .authors-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -377,7 +366,6 @@ select.form-control {
   margin: 0;
 }
 
-/* Поиск */
 .search-container {
   position: relative;
   max-width: 600px;
@@ -407,7 +395,6 @@ select.form-control {
   color: var(--text-muted);
 }
 
-/* Герой секция */
 .hero-section {
   background: #000;
   border-radius: 1rem;
@@ -460,7 +447,6 @@ select.form-control {
   background-color: var(--primary-hover);
 }
 
-/* Админ панель */
 .admin-layout {
   display: flex;
   min-height: 100vh;
@@ -529,7 +515,6 @@ select.form-control {
   margin-right: 0.75rem;
 }
 
-/* Статистика */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -569,7 +554,6 @@ select.form-control {
   font-size: 0.9rem;
 }
 
-/* Алерты */
 .alert {
   padding: 1rem 1.5rem;
   border-radius: 0.5rem;
@@ -595,7 +579,6 @@ select.form-control {
   color: #856404;
 }
 
-/* Пагинация */
 .pagination {
   display: flex;
   justify-content: center;
@@ -623,7 +606,6 @@ select.form-control {
   border-color: var(--primary-color);
 }
 
-/* Рейтинг звезды */
 .rating {
   display: flex;
   align-items: center;
@@ -640,7 +622,6 @@ select.form-control {
   fill: #e9ecef;
 }
 
-/* Утилиты */
 .text-center {
   text-align: center;
 }
@@ -743,7 +724,6 @@ select.form-control {
   height: 100%;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
   .container {
     padding: 0 0.5rem;
@@ -817,7 +797,6 @@ select.form-control {
   }
 }
 
-/* Анимации */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -833,7 +812,6 @@ select.form-control {
   animation: fadeIn 0.5s ease-out;
 }
 
-/* Загрузка */
 .loading {
   display: inline-block;
   width: 20px;
@@ -850,7 +828,6 @@ select.form-control {
   }
 }
 
-/* Модальные окна */
 .modal {
   position: fixed;
   top: 0;

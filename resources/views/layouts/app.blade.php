@@ -44,7 +44,6 @@
             padding: 0 1rem;
         }
 
-        /* Header */
         header {
             padding: 1rem 0;
             background: white;
@@ -143,7 +142,6 @@
             background-color: #9A5F14;
         }
 
-        /* Footer */
         footer {
             margin-top: 4rem;
             padding: 1.5rem 0;

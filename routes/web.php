@@ -27,14 +27,12 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 |
 */
 
-// Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/recommendations', [HomeController::class, 'recommendations'])->name('recommendations');
 Route::get('/book/{id}', [BookController::class, 'show'])->name('book.show');
 Route::get('/author/{id}', [AuthorController::class, 'show'])->name('author.show');
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 
-// Authentication routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -47,28 +45,23 @@ Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkE
 Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
-// Authenticated user routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/my-books', [UserBookController::class, 'index'])->name('my-books');
-    
-    // Profile routes
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/change-password', [ProfileController::class, 'showChangePasswordForm'])->name('profile.change-password');
     Route::put('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.update-password');
-    
-    // Reviews routes
+
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
     Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
     Route::post('/reviews/{review}/like', [ReviewController::class, 'like'])->name('reviews.like');
-    
-    // User books routes
+
     Route::post('/user-books/update-status', [UserBookController::class, 'updateStatus'])->name('user-books.update-status');
 });
 
-// Admin routes
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     

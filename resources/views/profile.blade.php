@@ -269,8 +269,7 @@
             </div>
         </div>
     </div>
-    
-    <!-- Reading Statistics -->
+   
     <h2 class="profile-title">Статистика чтения</h2>
     <div class="stats-grid">
         <div class="stat-card">
@@ -289,7 +288,6 @@
         </div>
     </div>
     
-    <!-- Recent Activity -->
     <h2 class="profile-title">Недавняя активность</h2>
     <div class="activity-card">
         @if($user->reviews()->count() > 0)

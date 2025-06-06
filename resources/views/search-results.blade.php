@@ -366,7 +366,6 @@
     </div>
     
     <div class="search-container">
-        <!-- Sidebar с фильтрами -->
         <div class="search-sidebar">
             <form action="{{ route('search') }}" method="GET" id="filterForm">
                 @if(!empty($searchParams['query']))
@@ -375,8 +374,6 @@
                 
                 <div class="filter-section">
                     <h3 class="filter-title">Фильтры</h3>
-                    
-                    <!-- Фильтр по жанрам -->
                     <div class="filter-group">
                         <label class="filter-label">Жанры</label>
                         <div class="filter-checkbox-group">
@@ -393,8 +390,6 @@
                             @endforeach
                         </div>
                     </div>
-                    
-                    <!-- Сортировка -->
                     <div class="filter-group">
                         <label class="filter-label" for="sort-by">Сортировка</label>
                         <select name="sort_by" id="sort-by" class="filter-select">
@@ -411,10 +406,7 @@
                 </div>
             </form>
         </div>
-        
-        <!-- Основной контент с результатами -->
         <div class="search-results">
-            <!-- Активные фильтры -->
             @if(!empty($searchParams['selectedGenres']))
                 <div class="active-filters">
                     @foreach($genres->whereIn('id', $searchParams['selectedGenres']) as $genre)

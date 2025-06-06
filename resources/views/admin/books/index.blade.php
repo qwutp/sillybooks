@@ -9,8 +9,6 @@
         Добавить книгу
     </a>
 </div>
-
-<!-- Поиск и фильтры -->
 <div class="card" style="margin-bottom: 2rem;">
     <div class="card-body">
         <form method="GET" action="{{ route('admin.books.index') }}" style="display: flex; gap: 1rem; align-items: center;">
@@ -24,8 +22,6 @@
         </form>
     </div>
 </div>
-
-<!-- Список книг -->
 <div class="card">
     @if($books->count() > 0)
         <table class="table">
@@ -85,8 +81,6 @@
                 @endforeach
             </tbody>
         </table>
-        
-        <!-- Пагинация -->
         @if($books->hasPages())
             <div style="padding: 1.5rem; border-top: 1px solid #ddd;">
                 {{ $books->links() }}

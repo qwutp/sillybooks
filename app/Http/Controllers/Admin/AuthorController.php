@@ -76,15 +76,14 @@ class AuthorController extends Controller
         $author->bio = $validated['bio'] ?? null;
         
         if ($request->hasFile('image')) {
-            // Delete old image if exists
+
             if ($author->image && file_exists(public_path('images/authors/' . $author->image))) {
                 unlink(public_path('images/authors/' . $author->image));
             }
             
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            
-            // Создаем папку если её нет
+
             if (!file_exists(public_path('images/authors'))) {
                 mkdir(public_path('images/authors'), 0755, true);
             }
@@ -101,7 +100,7 @@ class AuthorController extends Controller
     
     public function destroy(Author $author)
     {
-        // Delete image if exists
+
         if ($author->image && file_exists(public_path('images/authors/' . $author->image))) {
             unlink(public_path('images/authors/' . $author->image));
         }

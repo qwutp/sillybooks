@@ -1,6 +1,4 @@
-// Основной JavaScript для SillyBooks
 document.addEventListener("DOMContentLoaded", () => {
-  // Инициализация всех компонентов
   initSearch()
   initImageUpload()
   initModals()
@@ -8,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu()
   initRating()
 
-  // Поиск
   function initSearch() {
     const searchInput = document.querySelector(".search-input")
     if (searchInput) {
@@ -26,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function performSearch(query) {
     if (query.length < 2) return
 
-    // Простой поиск по книгам
     const books = document.querySelectorAll(".book-card")
     books.forEach((book) => {
       const title = book.querySelector(".book-title")?.textContent.toLowerCase()
@@ -40,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Загрузка изображений
   function initImageUpload() {
     const fileInputs = document.querySelectorAll('input[type="file"]')
 
@@ -71,9 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `
   }
 
-  // Модальные окна
   function initModals() {
-    // Открытие модальных окон
     document.addEventListener("click", (e) => {
       if (e.target.matches("[data-modal]")) {
         e.preventDefault()
@@ -86,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     })
 
-    // Закрытие по ESC
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         window.SillyBooks.closeModal()
@@ -94,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Формы
   function initForms() {
     const forms = document.querySelectorAll("form")
 
@@ -104,8 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
           e.preventDefault()
         }
       })
-
-      // Валидация в реальном времени
       const inputs = form.querySelectorAll(".form-control")
       inputs.forEach((input) => {
         input.addEventListener("blur", function () {
@@ -137,13 +126,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let isValid = true
     let errorMessage = ""
 
-    // Проверка обязательных полей
     if (field.hasAttribute("required") && !value) {
       isValid = false
       errorMessage = "Это поле обязательно для заполнения"
     }
 
-    // Проверка email
     if (field.type === "email" && value) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!emailRegex.test(value)) {
@@ -152,13 +139,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Проверка пароля
     if (field.type === "password" && value && value.length < 6) {
       isValid = false
       errorMessage = "Пароль должен содержать минимум 6 символов"
     }
 
-    // Подтверждение пароля
     if (field.name === "password_confirmation") {
       const passwordField = field.form.querySelector('[name="password"]')
       if (passwordField && value !== passwordField.value) {
@@ -197,7 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Мобильное меню
   function initMobileMenu() {
     const menuToggle = document.querySelector(".menu-toggle")
     const sidebar = document.querySelector(".admin-sidebar")
@@ -209,7 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Рейтинг звезд
   function initRating() {
     const ratingContainers = document.querySelectorAll(".rating-input")
 
@@ -245,7 +228,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Подтверждение удаления
   document.addEventListener("click", (e) => {
     if (e.target.matches(".delete-btn") || e.target.closest(".delete-btn")) {
       if (!confirm("Вы уверены, что хотите удалить этот элемент?")) {
@@ -254,7 +236,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   })
 
-  // Автоматическое скрытие алертов
   const alerts = document.querySelectorAll(".alert")
   alerts.forEach((alert) => {
     setTimeout(() => {
@@ -265,7 +246,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 5000)
   })
 
-  // Плавная прокрутка
   document.addEventListener("click", (e) => {
     if (e.target.matches('a[href^="#"]')) {
       e.preventDefault()
@@ -278,7 +258,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   })
 
-  // Ленивая загрузка изображений
   const images = document.querySelectorAll("img[data-src]")
   const imageObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
@@ -294,7 +273,6 @@ document.addEventListener("DOMContentLoaded", () => {
   images.forEach((img) => imageObserver.observe(img))
 })
 
-// Утилиты
 function showLoading(element) {
   element.innerHTML = '<div class="loading"></div>'
 }
@@ -319,7 +297,6 @@ function showNotification(message, type = "success") {
   }, 3000)
 }
 
-// Экспорт функций для глобального использования
 window.SillyBooks = {
   showNotification,
   showLoading,

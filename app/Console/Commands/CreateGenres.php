@@ -7,23 +7,11 @@ use App\Models\Genre;
 
 class CreateGenres extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+
     protected $signature = 'create:genres';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Create default genres for books';
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $genres = [

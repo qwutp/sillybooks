@@ -5,7 +5,6 @@
 @section('content')
     <div class="container" style="padding: 2rem 0;">
         <div style="display: flex; gap: 2rem; margin-bottom: 3rem;">
-            <!-- Author Image -->
             <div style="flex-shrink: 0;">
                 <div style="width: 200px; height: 200px; border-radius: 50%; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
                     @if($author->image && file_exists(public_path('images/authors/' . $author->image)))
@@ -15,8 +14,6 @@
                     @endif
                 </div>
             </div>
-            
-            <!-- Author Details -->
             <div style="flex: 1;">
                 <h1 style="font-size: 2rem; margin-bottom: 1rem; color: #333;">{{ $author->name }}</h1>
                 
@@ -41,8 +38,6 @@
                 @endif
             </div>
         </div>
-        
-        <!-- Author's Books -->
         <div>
             <h2 style="font-size: 1.5rem; margin-bottom: 2rem; color: #333;">Книги автора</h2>
             
@@ -67,8 +62,6 @@
                                     <span>{{ number_format($book->average_rating, 1) }}</span>
                                 </div>
                                 @endif
-                                
-                                <!-- Genres -->
                                 <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; justify-content: center; margin-top: 0.5rem;">
                                     @foreach($book->genres->take(2) as $genre)
                                         <span style="background: #f3f4f6; color: #6b7280; padding: 0.25rem 0.5rem; border-radius: 0.5rem; font-size: 0.75rem;">{{ $genre->name }}</span>

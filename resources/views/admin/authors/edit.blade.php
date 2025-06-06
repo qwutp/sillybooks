@@ -17,7 +17,6 @@
             @method('PUT')
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-                <!-- Имя автора -->
                 <div class="form-group">
                     <label for="name" class="form-label">Имя автора *</label>
                     <input type="text" name="name" id="name" value="{{ old('name', $author->name) }}" required
@@ -26,8 +25,6 @@
                         <div class="error-message">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <!-- Дата рождения -->
                 <div class="form-group">
                     <label for="birth_date" class="form-label">Дата рождения</label>
                     <input type="date" name="birth_date" id="birth_date" value="{{ old('birth_date', $author->birth_date?->format('Y-m-d')) }}"
@@ -37,8 +34,6 @@
                     @enderror
                 </div>
             </div>
-
-            <!-- Биография -->
             <div class="form-group">
                 <label for="bio" class="form-label">Биография</label>
                 <textarea name="bio" id="bio" rows="6"
@@ -47,8 +42,6 @@
                     <div class="error-message">{{ $message }}</div>
                 @enderror
             </div>
-
-            <!-- Текущее фото -->
             @if($author->image && file_exists(public_path('images/authors/' . $author->image)))
                 <div class="form-group">
                     <label class="form-label">Текущее фото</label>
@@ -58,8 +51,6 @@
                     </div>
                 </div>
             @endif
-
-            <!-- Новое фото -->
             <div class="form-group">
                 <label for="image" class="form-label">Изменить фото</label>
                 <input type="file" name="image" id="image" accept="image/*"
@@ -68,8 +59,6 @@
                     <div class="error-message">{{ $message }}</div>
                 @enderror
             </div>
-
-            <!-- Кнопки -->
             <div class="d-flex justify-between" style="padding-top: 1.5rem; border-top: 1px solid #e5e7eb;">
                 <a href="{{ route('admin.authors.index') }}" class="btn btn-secondary">
                     Отмена

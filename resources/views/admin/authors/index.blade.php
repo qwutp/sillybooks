@@ -9,8 +9,6 @@
         Добавить автора
     </a>
 </div>
-
-<!-- Поиск и фильтры -->
 <div class="card" style="margin-bottom: 2rem;">
     <div class="card-body">
         <form method="GET" action="{{ route('admin.authors.index') }}" style="display: flex; gap: 1rem; align-items: center;">
@@ -24,8 +22,6 @@
         </form>
     </div>
 </div>
-
-<!-- Список авторов -->
 <div class="card">
     @if($authors->count() > 0)
         <table class="table">
@@ -72,8 +68,6 @@
                 @endforeach
             </tbody>
         </table>
-        
-        <!-- Пагинация -->
         @if($authors->hasPages())
             <div style="padding: 1.5rem; border-top: 1px solid #ddd;">
                 {{ $authors->links() }}

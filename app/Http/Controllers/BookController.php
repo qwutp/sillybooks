@@ -13,8 +13,7 @@ class BookController extends Controller
     {
         $book = Book::with(['author', 'reviews.user', 'genres'])
             ->findOrFail($id);
-            
-        // Get user's book status if authenticated
+
         $userBookStatus = null;
         if (Auth::check()) {
             $userBook = UserBook::where('user_id', Auth::id())

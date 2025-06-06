@@ -12,17 +12,12 @@ use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
-    /**
-     * Show the registration form.
-     */
+
     public function showRegistrationForm()
     {
         return view('auth.register');
     }
-    
-    /**
-     * Handle a registration request for the application.
-     */
+
     public function register(Request $request)
     {
         $request->validate([
@@ -34,7 +29,7 @@ class RegisterController extends Controller
                 'max:255', 
                 'unique:users',
                 function ($attribute, $value, $fail) {
-                    // Список разрешенных доменов
+
                     $allowedDomains = [
                         'gmail.com', 'yandex.ru', 'yandex.com', 'mail.ru', 
                         'outlook.com', 'hotmail.com', 'yahoo.com', 'icloud.com',
@@ -47,8 +42,7 @@ class RegisterController extends Controller
                     if (!in_array($domain, $allowedDomains)) {
                         $fail('Пожалуйста, используйте email с одного из популярных сервисов (Gmail, Yandex, Mail.ru и др.)');
                     }
-                    
-                    // Дополнительная проверка на корректность домена
+
                     if (!checkdnsrr($domain, 'MX') && !checkdnsrr($domain, 'A')) {
                         $fail('Указанный email домен не существует.');
                     }
@@ -56,11 +50,9 @@ class RegisterController extends Controller
             ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-        
-        // Получаем роль пользователя
+
         $role = Role::where('slug', 'user')->first();
-        
-        // Если роль не найдена, создаем ее
+
         if (!$role) {
             Log::warning('Role "user" not found. Creating it now.');
             $role = Role::create([

@@ -10,11 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class UserBookController extends Controller
 {
-    /**
-     * Display a listing of the user's books.
-     *
-     * @return \Illuminate\View\View
-     */
+
     public function index()
     {
         $userId = auth()->id();
@@ -42,10 +38,7 @@ class UserBookController extends Controller
             
         return view('my-books', compact('currentlyReading', 'wantToRead', 'completed'));
     }
-    
-    /**
-     * Update book status for user
-     */
+
     public function updateStatus(Request $request)
     {
         Log::info('UserBook updateStatus called', [
@@ -54,15 +47,14 @@ class UserBookController extends Controller
         ]);
         
         try {
-            // Validate request
+
             $validated = $request->validate([
                 'book_id' => 'required|integer|exists:books,id',
                 'status' => 'required|string|in:want_to_read,reading,completed'
             ]);
             
             $userId = Auth::id();
-            
-            // Check if user is authenticated
+
             if (!$userId) {
                 Log::warning('Unauthenticated user trying to update book status');
                 return response()->json([
@@ -70,8 +62,7 @@ class UserBookController extends Controller
                     'message' => 'Пользователь не авторизован'
                 ], 401);
             }
-            
-            // Check if book exists
+
             $book = Book::find($validated['book_id']);
             if (!$book) {
                 Log::warning('Book not found', ['book_id' => $validated['book_id']]);
@@ -80,8 +71,7 @@ class UserBookController extends Controller
                     'message' => 'Книга не найдена'
                 ], 404);
             }
-            
-            // Update or create user book record
+  
             $userBook = UserBook::updateOrCreate(
                 [
                     'user_id' => $userId,

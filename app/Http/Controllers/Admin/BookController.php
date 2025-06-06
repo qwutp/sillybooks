@@ -11,21 +11,13 @@ use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        // НЕ ИСПОЛЬЗУЙТЕ middleware() здесь - это вызывает ошибку
-        // $this->middleware('auth');
-        // $this->middleware('role:admin');
     }
     
     public function index()
     {
-        // Проверка прав доступа
+
         if (!auth()->check() || !auth()->user()->hasRole('admin')) {
             abort(403, 'Доступ запрещен. Требуются права администратора.');
         }
@@ -49,15 +41,14 @@ class BookController extends Controller
     
     public function create()
     {
-        // Проверка прав доступа
+
         if (!auth()->check() || !auth()->user()->hasRole('admin')) {
             abort(403, 'Доступ запрещен. Требуются права администратора.');
         }
         
         $authors = Author::all();
         $genres = Genre::all();
-        
-        // Если жанров нет, создаем их
+
         if ($genres->isEmpty()) {
             $this->createDefaultGenres();
             $genres = Genre::all();
@@ -84,7 +75,7 @@ class BookController extends Controller
     
     public function store(Request $request)
     {
-        // Проверка прав доступа
+
         if (!auth()->check() || !auth()->user()->hasRole('admin')) {
             abort(403, 'Доступ запрещен. Требуются права администратора.');
         }
@@ -107,8 +98,7 @@ class BookController extends Controller
         if ($request->hasFile('cover_image')) {
             $coverImage = $request->file('cover_image');
             $coverImageName = time() . '.' . $coverImage->extension();
-            
-            // Создаем папку если её нет
+  
             if (!file_exists(public_path('images/books'))) {
                 mkdir(public_path('images/books'), 0755, true);
             }
@@ -127,8 +117,7 @@ class BookController extends Controller
             'language' => $request->language,
             'is_bestseller' => $request->boolean('is_bestseller'),
         ]);
-        
-        // Привязываем жанры
+ 
         if ($request->has('genres')) {
             $book->genres()->attach($request->genres);
         }
@@ -138,7 +127,7 @@ class BookController extends Controller
     
     public function edit(Book $book)
     {
-        // Проверка прав доступа
+ 
         if (!auth()->check() || !auth()->user()->hasRole('admin')) {
             abort(403, 'Доступ запрещен. Требуются права администратора.');
         }
@@ -152,7 +141,7 @@ class BookController extends Controller
     
     public function update(Request $request, Book $book)
     {
-        // Проверка прав доступа
+ 
         if (!auth()->check() || !auth()->user()->hasRole('admin')) {
             abort(403, 'Доступ запрещен. Требуются права администратора.');
         }
@@ -177,8 +166,7 @@ class BookController extends Controller
         if ($request->hasFile('cover_image')) {
             $coverImage = $request->file('cover_image');
             $coverImageName = time() . '.' . $coverImage->extension();
-            
-            // Создаем папку если её нет
+
             if (!file_exists(public_path('images/books'))) {
                 mkdir(public_path('images/books'), 0755, true);
             }
@@ -188,8 +176,7 @@ class BookController extends Controller
         }
         
         $book->update($data);
-        
-        // Обновляем жанры
+
         if ($request->has('genres')) {
             $book->genres()->sync($request->genres);
         }
@@ -199,7 +186,7 @@ class BookController extends Controller
     
     public function destroy(Book $book)
     {
-        // Проверка прав доступа
+
         if (!auth()->check() || !auth()->user()->hasRole('admin')) {
             abort(403, 'Доступ запрещен. Требуются права администратора.');
         }

@@ -10,23 +10,11 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateDefaultRoles extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+
     protected $signature = 'roles:create';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Create default roles and permissions';
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $this->info('Creating default roles...');

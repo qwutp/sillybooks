@@ -43,7 +43,6 @@
             min-height: 100vh;
         }
 
-        /* Sidebar */
         .admin-sidebar {
             width: 280px;
             background: white;
@@ -136,7 +135,6 @@
             color: #B57219;
         }
 
-        /* Main Content */
         .admin-content {
             flex: 1;
             margin-left: 280px;
@@ -184,7 +182,6 @@
             padding: 2rem;
         }
 
-        /* Cards */
         .card {
             background: white;
             border-radius: 0.75rem;
@@ -211,7 +208,6 @@
             padding: 1.5rem;
         }
 
-        /* Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -242,7 +238,6 @@
             font-size: 0.875rem;
         }
 
-        /* Tables */
         .table {
             width: 100%;
             border-collapse: collapse;
@@ -272,7 +267,6 @@
             object-fit: cover;
         }
 
-        /* Forms */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -309,7 +303,6 @@
             margin-top: 0.25rem;
         }
 
-        /* Search */
         .search-box {
             position: relative;
             max-width: 400px;
@@ -327,7 +320,6 @@
             color: #6b7280;
         }
 
-        /* Buttons */
         .btn {
             display: inline-block;
             padding: 0.5rem 1rem;
@@ -376,7 +368,6 @@
             font-size: 0.75rem;
         }
 
-        /* Badges */
         .badge {
             display: inline-block;
             padding: 0.25rem 0.5rem;
@@ -395,8 +386,6 @@
             background-color: #dbeafe;
             color: #1e40af;
         }
-
-        /* Alerts */
         .alert {
             padding: 1rem 1.5rem;
             border-radius: 0.5rem;
@@ -415,8 +404,6 @@
             border-color: #fecaca;
             color: #b91c1c;
         }
-
-        /* Utilities */
         .d-flex {
             display: flex;
         }
@@ -481,7 +468,6 @@
 </head>
 <body>
     <div class="admin-layout">
-        <!-- Sidebar -->
         <div class="admin-sidebar">
             <div class="sidebar-brand">
                 <a href="{{ route('home') }}">
@@ -521,8 +507,6 @@
                 </form>
             </div>
         </div>
-        
-        <!-- Main Content -->
         <div class="admin-content">
             <header class="admin-header">
                 <h1>@yield('title')</h1>

@@ -6,7 +6,6 @@
     <div class="container">
         <h1 class="page-title">Мои книги</h1>
         
-        <!-- Currently Reading Section -->
         <section class="section">
             <h2 class="section-title">Сейчас читаю ({{ $currentlyReading->count() }})</h2>
             <div class="books-grid">
@@ -23,8 +22,7 @@
                 @endforelse
             </div>
         </section>
-        
-        <!-- Want to Read Section -->
+  
         <section class="section">
             <h2 class="section-title">Хочу прочитать ({{ $wantToRead->count() }})</h2>
             <div class="books-grid">
@@ -41,8 +39,7 @@
                 @endforelse
             </div>
         </section>
-        
-        <!-- Completed Section -->
+
         <section class="section">
             <h2 class="section-title">Прочитано ({{ $completed->count() }})</h2>
             <div class="books-grid">

@@ -5,7 +5,6 @@
 @section('content')
     <div class="container" style="padding: 2rem 0;">
         <div style="display: flex; gap: 2rem; margin-bottom: 3rem;">
-            <!-- Book Cover -->
             <div style="flex-shrink: 0;">
                 <div style="width: 300px; height: 400px; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
                     @if($book->cover_image && file_exists(public_path('images/books/' . $book->cover_image)))
@@ -15,8 +14,6 @@
                     @endif
                 </div>
             </div>
-            
-            <!-- Book Details -->
             <div style="flex: 1;">
                 <h1 style="font-size: 2rem; margin-bottom: 1rem; color: #333;">{{ $book->title }}</h1>
                 
@@ -52,15 +49,11 @@
                         {{ $book->description }}
                     </p>
                 </div>
-                
-                <!-- Genres -->
                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;">
                     @foreach($book->genres as $genre)
                         <span style="background: #f3f4f6; color: #374151; padding: 0.5rem 1rem; border-radius: 1rem; font-size: 0.875rem;">{{ $genre->name }}</span>
                     @endforeach
                 </div>
-                
-                <!-- Book Info -->
                 <div style="background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;">
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
                         @if($book->age_rating)
@@ -108,8 +101,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Reviews Section -->
         <div>
             <h2 style="font-size: 1.5rem; margin-bottom: 2rem; color: #333;">Отзывы</h2>
             
@@ -197,8 +188,6 @@
                         {{ $review->content }}
                     </p>
                 </div>
-                
-                <!-- Edit form (hidden by default) -->
                 <div class="edit-form-{{ $review->id }}" style="display: none;">
                     <form action="{{ route('reviews.update', $review->id) }}" method="POST">
                         @csrf
@@ -257,8 +246,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Page loaded, initializing book status buttons');
-            
-            // Star rating functionality for new reviews
             document.querySelectorAll('.star-rating').forEach(star => {
                 star.addEventListener('click', function() {
                     const rating = this.dataset.rating;
@@ -273,8 +260,6 @@
                     });
                 });
             });
-            
-            // Star rating functionality for edit forms
             document.querySelectorAll('.edit-star-rating').forEach(star => {
                 star.addEventListener('click', function() {
                     const rating = this.dataset.rating;
@@ -290,8 +275,6 @@
                     });
                 });
             });
-            
-            // Like button hover effect
             document.querySelectorAll('.like-button').forEach(button => {
                 button.addEventListener('mouseenter', function() {
                     this.style.color = '#ef4444';
@@ -301,8 +284,6 @@
                     this.style.color = '#6b7280';
                 });
             });
-            
-            // Book status functionality
             document.querySelectorAll('.book-status-btn').forEach(button => {
                 console.log('Found button:', button.dataset.status);
                 
@@ -313,13 +294,9 @@
                     const status = this.dataset.status;
                     
                     console.log('Book ID:', bookId, 'Status:', status);
-                    
-                    // Show loading state
                     const originalText = this.textContent;
                     this.textContent = 'Загрузка...';
                     this.disabled = true;
-                    
-                    // Get CSRF token
                     const token = document.querySelector('meta[name="csrf-token"]');
                     if (!token) {
                         console.error('CSRF token not found');
@@ -364,7 +341,6 @@
                         console.log('Response data:', data);
                         
                         if (data.success) {
-                            // Update button styles
                             document.querySelectorAll('.book-status-btn').forEach(btn => {
                                 const btnStatus = btn.dataset.status;
                                 btn.disabled = false;
@@ -378,7 +354,6 @@
                                 }
                                 
                                 if (btnStatus === status) {
-                                    // Active state
                                     if (btnStatus === 'want_to_read') {
                                         btn.style.background = '#B57219';
                                         btn.style.color = 'white';
@@ -390,7 +365,6 @@
                                         btn.style.color = 'white';
                                     }
                                 } else {
-                                    // Inactive state
                                     btn.style.background = 'white';
                                     if (btnStatus === 'want_to_read') {
                                         btn.style.color = '#B57219';
@@ -402,7 +376,6 @@
                                 }
                             });
                             
-                            // Show success message
                             showMessage('Статус книги обновлен!', 'success');
                         } else {
                             throw new Error(data.message || 'Произошла ошибка');
@@ -410,8 +383,6 @@
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        
-                        // Reset button
                         this.textContent = originalText;
                         this.disabled = false;
                         
@@ -420,7 +391,6 @@
                 });
             });
             
-            // Helper function to show messages
             function showMessage(text, type) {
                 const message = document.createElement('div');
                 message.style.cssText = `
@@ -443,7 +413,6 @@
             }
         });
         
-        // Edit review functions
         function editReview(reviewId) {
             document.querySelector(`.review-content-${reviewId}`).style.display = 'none';
             document.querySelector(`.edit-form-${reviewId}`).style.display = 'block';

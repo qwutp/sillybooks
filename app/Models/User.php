@@ -10,11 +10,6 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -23,40 +18,23 @@ class User extends Authenticatable
         'role_id',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    
-    /**
-     * Get the role that owns the user.
-     */
+
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
-    
-    /**
-     * Check if the user has a specific role.
-     */
+
     public function hasRole($role)
     {
-        // Проверяем, что роль пользователя не null
         if (!$this->role) {
             return false;
         }
@@ -68,20 +46,13 @@ class User extends Authenticatable
         return $this->role->id === $role->id;
     }
     
-    /**
-     * Check if the user is an admin.
-     */
     public function isAdmin()
     {
         return $this->hasRole('admin');
     }
-    
-    /**
-     * Check if the user has a specific permission.
-     */
+
     public function hasPermission($permission)
     {
-        // Проверяем, что роль пользователя не null
         if (!$this->role) {
             return false;
         }
@@ -92,26 +63,17 @@ class User extends Authenticatable
         
         return $this->role->permissions->contains('id', $permission->id);
     }
-    
-    /**
-     * Get the reviews for the user.
-     */
+
     public function reviews()
     {
         return $this->hasMany(Review::class);
     }
-    
-    /**
-     * Get the user books for the user.
-     */
+
     public function userBooks()
     {
         return $this->hasMany(UserBook::class);
     }
-    
-    /**
-     * Get the books for the user.
-     */
+
     public function books()
     {
         return $this->belongsToMany(Book::class, 'user_books')

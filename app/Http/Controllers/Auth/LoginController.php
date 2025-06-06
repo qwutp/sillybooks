@@ -8,17 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /**
-     * Show the login form.
-     */
+
     public function showLoginForm()
     {
         return view('auth.login');
     }
-    
-    /**
-     * Handle a login request to the application.
-     */
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -36,10 +31,7 @@ class LoginController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
     }
-    
-    /**
-     * Log the user out of the application.
-     */
+
     public function logout(Request $request)
     {
         Auth::logout();

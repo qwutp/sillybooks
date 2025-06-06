@@ -9,34 +9,19 @@ use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
-    /**
-     * Show the user profile.
-     *
-     * @return \Illuminate\View\View
-     */
+
     public function index()
     {
         $user = auth()->user();
         return view('profile', compact('user'));
     }
-    
-    /**
-     * Show the form for editing the user profile.
-     *
-     * @return \Illuminate\View\View
-     */
+
     public function edit()
     {
         $user = auth()->user();
         return view('profile.edit', compact('user'));
     }
-    
-    /**
-     * Update the user profile.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function update(Request $request)
     {
         $user = auth()->user();
@@ -61,23 +46,12 @@ class ProfileController extends Controller
         
         return redirect()->route('profile')->with('success', 'Профиль успешно обновлен.');
     }
-    
-    /**
-     * Show the form for changing the user password.
-     *
-     * @return \Illuminate\View\View
-     */
+
     public function showChangePasswordForm()
     {
         return view('profile.change-password');
     }
-    
-    /**
-     * Change the user password.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function changePassword(Request $request)
     {
         $request->validate([
